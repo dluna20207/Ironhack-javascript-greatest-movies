@@ -77,10 +77,10 @@ function ratesAverage(inputArray) {
     let numOfNoRate = 0;
 
     inputArray.forEach(element => {
-        if("rate" in element){
-        x.push(element.rate);
+        if ("rate" in element) {
+            x.push(element.rate);
         }
-        else{
+        else {
             numOfNoRate++;
         }
     });
@@ -110,10 +110,10 @@ function dramaMoviesRate(inputArray) {
     let numOfNoRate = 0;
 
     inputArray.forEach(element => {
-        if("rate" in element && element.genre.includes("Drama")){
-        x.push(element.rate);
+        if ("rate" in element && element.genre.includes("Drama")) {
+            x.push(element.rate);
         }
-        else if(element.genre.includes("Drama")){
+        else if (element.genre.includes("Drama")) {
             numOfNoRate++;
         }
     });
@@ -137,60 +137,59 @@ function dramaMoviesRate(inputArray) {
 
 // Iteration 6: Time Format - Turn duration of the movies from hours to minutes
 
-function turnHoursToMinutes(inputArray){
+function turnHoursToMinutes(inputArray) {
 
-    let orignialLength = [];
-    let newArray = inputArray;
+    let copyArray = [...inputArray];
 
-    inputArray.forEach(element => {
-        orignialLength.push(element.hours);
-    });
+    let moviesInMinutes = copyArray.map( ( element ) => {
 
-    let newLength = [];
+        let originalTime = element.duration;
 
-    hours.forEach(element => {
+        let finalTime = 0;
 
-        let movieLengthArr = element.split(" ");
-        if(movieLengthArr[0].includes("min")){
-            movieLengthArr.unshift("0");
-        }
-        if(movieLengthArr[0].includes("h")){
-            movieLengthArr.push("0")
+        let temp;
+
+        if (originalTime.indexOf('h') >= 0 && originalTime.indexOf('min') >= 0) {
+            temp = originalTime.replace('h', "").replace('min', "").trim();
+            finalTime = Number(temp.substring(0, temp.indexOf(" "))) * 60 + Number(temp.substring(temp.indexOf(" ") + 1));
         }
 
-        movieLengthArr[0] = movieLengthArr[0].replace(/\D/g, "");
-        movieLengthArr[1] = movieLengthArr[1].replace(/\D/g, "");
+        else if (duration.indexOf('h') >= 0) {
 
-        newLength.push(Number(movieLengthArr[0] * 60 + Number(movieLengthArr[1])));
+            finalTime = Number(duration.substring(0, duration.indexOf("h"))) * 60;
+        }
 
-    });
+        else if (duration.indexOf('min') >= 0) {
+            finalTime = Number(duration.substring(0, duration.indexOf("min")));
+        }
 
-    newArray.forEach(element => {
-        for (let i = 0; i < array.length; i++) {
-            const element = array[i];
-            
+        return {
+            title: element.title,
+            year: element.year,
+            director: element.director,
+            duration: finalTime,
+            genre: element.genre,
+            rate: element.rate
         }
     })
 
-
-    return newArray;
-
+    return moviesInMinutes;
 }
 
 // BONUS Iteration: Best yearly rate average - Best yearly rate average
 
-function bestYearAvg(inputArray){
+function bestYearAvg(inputArray) {
 
-let maxYear = 0;
+    let maxYear = 0;
 
-inputArray.forEach(element => {
-    if(element.year > maxYear){
-        maxYear = element.year;
+    inputArray.forEach(element => {
+        if (element.year > maxYear) {
+            maxYear = element.year;
+        }
+    });
+
+    for (let i = 0; i < maxYear; i++) {
+
     }
-});
-
-for (let i = 0; i < maxYear; i++) {
-    
-}
 
 }
